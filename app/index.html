@@ -3,9 +3,9 @@
 <head>
 <meta charset="ISO-8859-1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
 <!-- build:css(.) styles/vendor.css -->
 <!-- bower:css -->
-<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
 <link rel="stylesheet" href="bower_components/angularjs-toaster/toaster.css" />
 <!-- endbower -->
 <!-- endbuild -->
@@ -48,21 +48,31 @@
 
 
 		<div class="container">
-			<div class="col-md-4">
-				<div ng-repeat="env in envs">
-					<display-env env="env"></display-env>
+			<div ng-class="{'col-md-4' : projectConfig.oriantation === 'Colonne','row' : !projectConfig.oriantation === 'Colonne' }" class="">
+				<div  ng-repeat="env in envs">
+					<display-env ng-class="{'col-md-4' : !(projectConfig.oriantation === 'Colonne') }" env="env"></display-env>
+					<div class="row" ng-if="projectConfig.oriantation !== 'Colonne' && $index%3 == 2">
+					</div>
 				</div>
 			</div>
 			
 			
-			<div class="col-md-4"
-				ng-class="{'col-md-8' : sonarResources.length == 0, 'col-md-4' : sonarResources.length != 0}">
-				<alert ng-if="jenkinsStatus != null" type="danger">{{jenkinsStatus}}</alert>
-				<accordion close-others={{!expandAllJenkins}}> <display-job class="display-job" job="job"
-					expand="{{$index===0 || expandAllJenkins}}"
-					ng-repeat="job in jobs  | orderBy:'-builds[0].number'" /> </accordion>
+			<div class=""
+				 ng-class="{	'col-md-8' : sonarResources.length == 0,
+				 				'col-md-4' : sonarResources.length != 0 && projectConfig.oriantation === 'Colonne',
+				 				'col-md-12' : projectConfig.oriantation !== 'Colonne'}">
+				<div class="alert alert-danger" ng-if="jenkinsStatus != null">{{jenkinsStatus}}</div>
+				<accordion close-others={{!expandAllJenkins}}>
+					<display-job class="display-job" job="job" expand="{{$index===0 || expandAllJenkins}}"
+					ng-repeat="job in jobs  | orderBy:'-builds[0].number'">
+
+					</display-job>
+				</accordion>
 			</div>
-			<div class="col-md-4" ng-if="sonarResources.length != 0">
+			<div  ng-class="{	'col-md-8' : sonarResources.length == 0,
+				 				'col-md-4' : sonarResources.length != 0 && projectConfig.oriantation === 'Colonne',
+				 				'col-md-12' : projectConfig.oriantation !== 'Colonne'}"
+				 ng-if="sonarResources.length != 0">
 				<alert ng-if="sonarStatus != null" type="danger">{{sonarStatus}}</alert>
 				<accordion close-others={{!expandAllSonar}}> <display-sonar class="display-sonar" project="project"
 					sonar-url="sonarDirectAccessUrl" expand="{{$index===0 || expandAllSonar}}"

@@ -7,6 +7,7 @@ appControllers.controller('EnvironmentAppCtrl', function($scope, environmentServ
 	    $scope.applicationLogo = data.applicationLogo;
 	    $scope.applicationLinks = data.applicationLinks;
 	    $scope.applicationTools = data.applicationTools;
+		$scope.projectConfig = data.projectConfig;
 	    $scope.envs = data.env;
 	    $scope.jenkinsJobs = data.jenkinsJobs;
 	    $scope.sonarResources = data.sonarResources;
