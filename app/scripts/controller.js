@@ -37,9 +37,10 @@ appControllers.controller('EnvironmentAppCtrl', function($scope, environmentServ
     };
 
     $scope.getJenkinsJob = function(jenkinsJob) {
-	environmentService.getJobInformation($scope.jenkinsUrl, jenkinsJob, $scope.jenkinsBase64UsrPwd).success(function(data) {
+	environmentService.getJobInformation($scope.jenkinsUrl, jenkinsJob.name, $scope.jenkinsBase64UsrPwd).success(function(data) {
 	    var job = data;
 	    job.buildsDetails = [];
+        job.colorPanel = jenkinsJob.color;
 	    $scope.jobs.push(job);
 	    $scope.getJenkinsBuilds(job);
 	}).error(function(data, status) {

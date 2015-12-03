@@ -72,12 +72,6 @@ module.exports = function(grunt) {
 			hostname : 'localhost',
 			livereload : 35729
 		    },
-		    proxies : [ {
-				context: ['/activ-home','/jenkins','/sonar'],
-				host: '10.26.32.214',
-				port: 80,
-			changeOrigin : true
-		    } ],
 		    livereload : {
 			options : {
 			    open : true,
